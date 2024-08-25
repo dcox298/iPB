@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "play-pickle-ball-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/playPickleBall/PlayPickleBallWebPart.js",
+          "manifest": "./src/webparts/playPickleBall/PlayPickleBallWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "PlayPickleBallWebPartStrings": "lib/webparts/playPickleBall/loc/{locale}.js"
+  }
+}
