@@ -10,7 +10,8 @@ import { IReadonlyTheme } from '@microsoft/sp-component-base';
 
 import * as strings from 'PlayPickleBallWebPartStrings';
 import PlayPickleBall from './components/PlayPickleBall';
-import { IPlayPickleBallProps } from './components/IPlayPickleBallProps';
+import { IPlayPickleBallProps } from './components/PlayPickleBall';
+import { getSP } from './pnpjsConfig';
 
 export interface IPlayPickleBallWebPartProps {
   description: string;
@@ -36,10 +37,13 @@ export default class PlayPickleBallWebPart extends BaseClientSideWebPart<IPlayPi
     ReactDom.render(element, this.domElement);
   }
 
-  protected onInit(): Promise<void> {
-    return this._getEnvironmentMessage().then(message => {
-      this._environmentMessage = message;
-    });
+  public async onInit(): Promise<void> {
+    this._environmentMessage = await this._getEnvironmentMessage();
+  
+    await super.onInit();
+
+    getSP(this.context);
+   
   }
 
 
