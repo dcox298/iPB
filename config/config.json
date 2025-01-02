@@ -9,10 +9,19 @@
           "manifest": "./src/webparts/playPickleBall/PlayPickleBallWebPart.manifest.json"
         }
       ]
+    },
+    "basic-game-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/basicGame/BasicGameWebPart.js",
+          "manifest": "./src/webparts/basicGame/BasicGameWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
   "localizedResources": {
-    "PlayPickleBallWebPartStrings": "lib/webparts/playPickleBall/loc/{locale}.js"
+    "PlayPickleBallWebPartStrings": "lib/webparts/playPickleBall/loc/{locale}.js",
+    "BasicGameWebPartStrings": "lib/webparts/basicGame/loc/{locale}.js"
   }
 }
