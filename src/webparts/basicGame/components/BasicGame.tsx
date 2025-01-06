@@ -12,21 +12,38 @@ export default function BasicGame(props:IBasicGameProps):JSX.Element {
   const [postionA2] = React.useState('Player 4');
   const [postionH1] = React.useState('Player 1');
   const [postionH2] = React.useState('Player 2');
-  const [servingTeam] = React.useState('Home');
+  const [servingTeam] = React.useState('HOME');
   const [servingSide] = React.useState('Right');
   const [servingPosition] = React.useState(2);
-  const [winingSide,setWiningSide] = React.useState(null);
+  const [winingSide,setWiningSide] = React.useState('');
 
-  React.useEffect(()=>{
-    //read what happened
-    console.log(postionA1)
-    console.log(postionA2)
-    console.log(postionH1)
-    console.log(postionH2)
-    console.log(servingTeam)
-    console.log(winingSide)
-  })
+  //happens before render
+  if(winingSide!==''){
+    //point or no point
+    if(winingSide===servingTeam){
+      //did someone win?
+      let winner:number=winingSide==='HOME'?homeScore:awayScore;
+      const loser:number=winingSide==="HOME"?awayScore:homeScore;
 
+      if((winner >= 11) && ( (winner - loser) >= 2 )){
+          alert('winner')
+      }else{
+
+      }
+        //add score
+    }
+      
+    
+  }else{
+    console.log('New Game');
+  }
+  
+  console.log(postionA1);
+  console.log(postionA2);
+  console.log(postionH1);
+  console.log(postionH2);
+  console.log(servingTeam);
+  console.log(winingSide);
 
   return (
     <section className={`${styles.basicGame}`}>
@@ -34,7 +51,7 @@ export default function BasicGame(props:IBasicGameProps):JSX.Element {
 
         <PrimaryButton 
             text='AWAY'
-            onClick={()=>setAwayScore(awayScore+1)}
+            onClick={()=>{setWiningSide('HOME')}}
         />
 
         <Stack.Item>
@@ -81,11 +98,7 @@ export default function BasicGame(props:IBasicGameProps):JSX.Element {
           </Stack>
         </Stack.Item>
 
-        <PrimaryButton 
-            text='Home'
-            onClick={()=>{setHomeScore(homeScore+1);setWiningSide(this.props.text)}}      
-        />
-
+        <PrimaryButton text='HOME' onClick={()=>{setWiningSide('HOME')}}/>
       </Stack>
     </section>
   )
