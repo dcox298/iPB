@@ -1,60 +1,32 @@
 import * as React from 'react';
 import styles from './BasicGame.module.scss';
 import type { IBasicGameProps } from './IBasicGameProps';
-import { Text, PrimaryButton, Stack } from '@fluentui/react';
+import { Text, PrimaryButton, Stack, IconButton } from '@fluentui/react';
+import { useBasicGame } from '../../../common/hooks/useBasicGame';
+import { useWindowSize } from '../../../common/hooks/useWindowSize';
 
 
 export default function BasicGame(props:IBasicGameProps):JSX.Element {
 
-  const [awayScore,setAwayScore] = React.useState(0);
-  const [homeScore,setHomeScore] = React.useState(0);
-  const [postionA1] = React.useState('Player 3');
-  const [postionA2] = React.useState('Player 4');
-  const [postionH1] = React.useState('Player 1');
-  const [postionH2] = React.useState('Player 2');
-  const [servingTeam] = React.useState('HOME');
-  const [servingSide] = React.useState('Right');
-  const [servingPosition] = React.useState(2);
-  const [winingSide,setWiningSide] = React.useState('');
+  const {
+    awayScore,homeScore,servingPosition,servingSide,servingTeam,loading,
+    setWinner
+  } = useBasicGame();
 
-  //happens before render
-  if(winingSide!==''){
-    //point or no point
-    if(winingSide===servingTeam){
-      //did someone win?
-      let winner:number=winingSide==='HOME'?homeScore:awayScore;
-      const loser:number=winingSide==="HOME"?awayScore:homeScore;
-
-      if((winner >= 11) && ( (winner - loser) >= 2 )){
-          alert('winner')
-      }else{
-
-      }
-        //add score
-    }
-      
-    
-  }else{
-    console.log('New Game');
-  }
-  
-  console.log(postionA1);
-  console.log(postionA2);
-  console.log(postionH1);
-  console.log(postionH2);
-  console.log(servingTeam);
-  console.log(winingSide);
+  const windowSize=useWindowSize();
 
   return (
     <section className={`${styles.basicGame}`}>
-      <Stack>
-
+      
+      <Stack styles={{root:{height:(windowSize.height*.6)}}}>
+      <IconButton iconProps={{iconName:'Open'}} />
         <PrimaryButton 
+            disabled={loading}
             text='AWAY'
-            onClick={()=>{setWiningSide('HOME')}}
+            onClick={()=>{setWinner('AWAY')}}
         />
 
-        <Stack.Item>
+        <Stack.Item grow>
           <Stack horizontal>
             <Stack.Item grow align='center' styles={{root:{textAlign:'center'}}}>
               <Text >Score</Text>
@@ -65,18 +37,18 @@ export default function BasicGame(props:IBasicGameProps):JSX.Element {
           </Stack>
         </Stack.Item>
 
-        <Stack.Item>
+        <Stack.Item grow>
           <Stack horizontal>
             <Stack.Item grow align='center' styles={{root:{textAlign:'center'}}}>
-              <Text>Serving Side</Text>
+              <Text>Serve</Text>
             </Stack.Item>
             <Stack.Item grow align='center' styles={{root:{textAlign:'center'}}}>
-              <Text>{servingSide}</Text>
+              <Text>{servingTeam} - {servingSide}</Text>
             </Stack.Item>
           </Stack>
         </Stack.Item>
 
-        <Stack.Item>
+        <Stack.Item grow>
           <Stack horizontal>
           <Stack.Item grow align='center' styles={{root:{textAlign:'center'}}}>
               <Text>Server</Text>
@@ -87,7 +59,7 @@ export default function BasicGame(props:IBasicGameProps):JSX.Element {
           </Stack>
         </Stack.Item>
 
-        <Stack.Item>
+        <Stack.Item grow>
           <Stack horizontal>
           <Stack.Item grow align='center' styles={{root:{textAlign:'center'}}}>
               <Text>Score</Text>
@@ -98,7 +70,11 @@ export default function BasicGame(props:IBasicGameProps):JSX.Element {
           </Stack>
         </Stack.Item>
 
-        <PrimaryButton text='HOME' onClick={()=>{setWiningSide('HOME')}}/>
+        <PrimaryButton
+          
+          disabled={loading}
+         text='HOME' 
+         onClick={()=>{setWinner('HOME')}}/>
       </Stack>
     </section>
   )
